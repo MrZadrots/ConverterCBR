@@ -1,0 +1,32 @@
+{
+  "name": "convertercbr",
+  "version": "1.0.0",
+  "description": "Currency converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrZadrots/ConverterCBR.git"
+  },
+  "type": "module",
+  "author": "Artem Kablihin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrZadrots/ConverterCBR/issues"
+  },
+  "homepage": "https://github.com/MrZadrots/ConverterCBR#readme",
+
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "concurrently": "^7.1.0",
+    "config": "^3.3.7",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^3.2.3",
+    "nodemon": "^2.0.15"
+  }
+}
