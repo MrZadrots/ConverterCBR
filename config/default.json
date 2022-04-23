@@ -1,4 +1,9 @@
 {
     "port": 5000,
-    "jwtSecret":"artemkey"
+    "jwtSecret":"artemkey",
+    "host":"127.0.0.1",
+    "userName": "postgres",
+    "database":"postgres",
+    "password": "EGORletov2312",
+    "portDB": "5432"
 }
