@@ -5,5 +5,6 @@
     "userName": "postgres",
     "database":"postgres",
     "password": "EGORletov2312",
-    "portDB": "5432"
+    "portDB": "5432",
+    "baseUrl":"http://localhost:5000"
 }

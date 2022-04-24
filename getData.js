@@ -204,10 +204,10 @@ const UpdateDB = async (req) =>{
 }
 
 
-const getDataFromCb = schedule.scheduleJob('*/25 * * * * *',async function(){
+const getDataFromCb = schedule.scheduleJob('*/2 * * *',async function(){
     try {
-        var Today = new Date()
-        Today.setMilliseconds(3 * 60 * 60 * 1000);  // +3 часа
+        /*var Today = new Date()
+        Today.setMilliseconds(3 * 60 * 60 * 1000);  // +3 часа*/
         const data = await fetch('https://www.cbr-xml-daily.ru/daily_json.js')
     
         if(data.status===200&&data.ok){

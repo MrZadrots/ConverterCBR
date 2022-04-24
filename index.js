@@ -14,6 +14,9 @@ import {getDataFromCb} from './getData.js'*/
 
 const app = express();
 app.use(express.json({extended:true}))
+app.use('/api/auth',require('./router/auth.router'))
+app.use('/api/valutes',require('./router/valutes.router'))
+
 
 const PORT = config.get('port') || 5000
 

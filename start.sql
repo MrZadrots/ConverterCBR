@@ -1,7 +1,7 @@
 create table if not exists users
 (
     login varchar(25)  not null ,
-    password varchar(25)  not null,
+    password varchar(60)  not null,
     role varchar(25) default 'user' not null,
     id        serial            not null             primary key
 );

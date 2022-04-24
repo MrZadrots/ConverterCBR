@@ -164,7 +164,7 @@ class Valutes {
     }
 
     async getConn(){
-        await this.sequelize.authenticate()
+        this.sequelize.authenticate()
         .then(() => console.log('Connected.'))
         .catch((err) => console.error('Connection error: ', err))
     }
@@ -176,7 +176,7 @@ class Valutes {
         return isAdded
     }
     async setRow(data){
-        await this.valutes.create({dateparsing:data[0], aud:data[1], azn:data[2], gbp:data[3], amd:data[4], 
+        this.valutes.create({dateparsing:data[0], aud:data[1], azn:data[2], gbp:data[3], amd:data[4], 
             byn:data[5], bgn:data[6], brl:data[7], huf:data[8], hkd:data[9], dkk:data[10], usd:data[11], 
             eur:data[12], inr:data[13], kzt:data[14], cad:data[15], kgs:data[16], mdl:data[17], nok:data[18], 
             pln:data[19], ron:data[20], xdr:data[21], sgd:data[21], tjs:data[22], try:data[23], tmt:data[24], 
@@ -185,7 +185,7 @@ class Valutes {
             }).catch(err=>console.log(err));
     }
     async closeConn(){
-        await this.sequelize.close()
+        this.sequelize.close()
         .then(() => console.log('Closed.'))
         .catch((err) =>
             console.error('Close connection error: ', err)
