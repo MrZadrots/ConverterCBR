@@ -56,3 +56,8 @@ alter table valutes
 
 create unique index if not exists valutes_id_uindex
     on valutes (id);
+
+create table if not exists valutes (
+    name varchar(50) not null,
+    
+)

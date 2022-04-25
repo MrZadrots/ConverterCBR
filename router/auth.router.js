@@ -5,8 +5,7 @@ const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth.middleware')
 const {check, validationResult} =require('express-validator')
 const router = Router()
-const users = require('../model/user');
-
+const User = require('../model/user')
 
 // /api/auth/login
 router.post(
@@ -15,51 +14,44 @@ router.post(
         check('login','Неверный логин').isLength({min:4}),
         check('password','Неверный пароль').isLength({min:4})
     ],
-    async(req,res)=>{
-        try {
+    async (req,res)=>{
+       try {
             const errors = validationResult(req)
-
             if(!errors.isEmpty()){
                 return res.status(400).json({
                     errors: errors.array(),
                     message:errors.array()[0].msg
                 })
             }
-
-            console.log(req.body)
             const {login,password} = req.body
-            await users.getConn()
-            console.log(login)
-            const user = await users.getUser(login)
-            //await users.closeCoon()
-
-            if(user.length===0){
-                return res.status(400).json({message: "Нет такого пользователя"})
+            const user = await User.findOne({login})
+            if(!user){
+                return res.status(400).json({message: "Неверное имя пользователя или логин"})
             }
-            console.log("USER", user[0].login)
-            const isMath = bcrypt.compare(user[0].password,password)
-            if(!isMath ){
-                return res.status(400).json({message: "Неверный пароль, попробуйте снова!"})
-            }
+            const isMath = await bcrypt.compare(password,user.password)
 
+            if(!isMath){
+                return res.status(400).json({message: "Неверное имя пользователя или логин"})
+            }
             token = jwt.sign(
                 {
-                    userId:user[0].id,
-                    userName: user[0].login,
-                    userRole: user[0].role
+                    userId: user.id,
+                    userName: user.login,
+                    userRole: user.role
                 },
                 config.get('jwtSecret'),
                 {
-                    expiresIn:'1h'
+                    expiresIn: '1h'
                 }
             )
-
-            res.json({token,userId:user[0].id,userName:user[0].login,userRole:user[0].role})
-
-        } catch (error) {
-            res.status(500).json({message: error.message})
-        }
+            console.log(user.login)
+            res.json({token,userId:user.id,userName:user.login,userRole:user.role})
+       } catch (error) {
+            console.log(error.message)
+            return res.status(500).json({message: "Что-то пошло ни так!"})
+       }
     }
+
 )
 
 router.post(
@@ -68,7 +60,7 @@ router.post(
         check('login','Неверный логин').isLength({min:4}),
         check('password','Неверный пароль').isLength({min:4})
     ],
-    async(req,res) =>{
+    async (req,res) => {
         try {
             const errors = validationResult(req)
             if(!errors.isEmpty()){
@@ -77,30 +69,26 @@ router.post(
                     message:errors.array()[0].msg
                 })
             }
-            console.log(req.body)
-            const login =  req.body.login
-            const pass = await bcrypt.hash(req.body.password,12)
-            console.log(pass.length)
+
+            const {login,password} = req.body
+            const candidate = await User.findOne({login})
             
-            
-            await users.getConn()
-            const candidate = await users.getUser(login)
-            if(candidate.length != 0){
-                return res.status(400).json({message:"Такой пользователь уже существует!"})
+            if(candidate){
+                return res.status(401).json({message:"Такой пользователь уже существует"})
             }
 
-            const user = await users.setUser([login,pass])
-            const userData = user.dataValues
-            console.log("tyPE", typeof(user))
-            console.log("USER", user)
-            console.log("USER[0]", user.dataValues)
-            console.log("login", userData.login)
+            const hash = await bcrypt.hash(password,12)
+            const user = new User({login, password:hash})
+            await user.save()
+            res.status(200).json({message:"Вы успешно зарегистрировались!"})
 
-            res.status(201).json({message: 'Пользователь создан!'})
         } catch (error) {
-            res.status(500).json({message:error.message})
-        }
+            console.log(error.message)
+            return res.status(500).json({message: "Что-то пошло ни так!"})
+       }
     }
 )
+module.exports =  router
 
-module.exports=  router
+
+
