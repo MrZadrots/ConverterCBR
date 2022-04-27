@@ -5,7 +5,7 @@ const fetch = require('node-fetch')*/
 const express = require('express')
 const config = require('config')
 const fetch = require('node-fetch')
-const getDataFromCb = require('./getData')
+const getDataFromCb = require('./utils/getData')
 const mongoose = require('mongoose')
 
 /*import express from 'express';
@@ -17,7 +17,7 @@ import {getDataFromCb} from './getData.js'*/
 const app = express();
 app.use(express.json({extended:true}))
 app.use('/api/auth',require('./router/auth.router'))
-//app.use('/api/valutes',require('./router/valutes.router'))
+app.use('/api/valutes',require('./router/valutes.router'))
 
 
 const PORT = config.get('port') || 5000
@@ -29,7 +29,7 @@ async function start(){
             useUnifiedTopology:true,
         })
        app.listen(PORT,() => console.log("Server is started on port ",PORT)) 
-       getDataFromCb()
+       getDataFromCb
     } catch (error) {
         console.log("Server error: ",error)
         process.exit(1)

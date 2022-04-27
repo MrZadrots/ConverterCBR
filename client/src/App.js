@@ -20,10 +20,8 @@ function App() {
     <AuthContext.Provider value={{
      login,logout,token,userId,userName,userlastname,userphone,userrate,isAuthenticated 
     }}>
-      {<Header />}
-      <div className='container'>
-        {routes}
-      </div>
+      {isAuthenticated }
+      {routes}
     </AuthContext.Provider>
    );
 }

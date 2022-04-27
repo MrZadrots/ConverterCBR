@@ -115,6 +115,13 @@ const schema = new Schema({
                 value:{type:Number},
             }
         },
+        CNY:{
+            data:{
+                name:{type:String},
+                nominal:{type:Number},
+                value:{type:Number},
+            }
+        },
         MDL:{
             data:{
                 name:{type:String},

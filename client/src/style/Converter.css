@@ -1,0 +1,32 @@
+.buttonMain{
+    width: 100px;
+}
+.selecter{
+    align-items: center;
+    text-align: center;
+    height: 30px;
+}
+.InputRow_selectOn select {
+    height: 30px;
+    border-radius: 5px;
+}
+.InputRow_selectTo select {
+    height: 30px;
+    border-radius: 5px;
+}
+.InputRow_selectClick_Btn{
+    width: 150px;
+    border: 0px;
+    height: 40px;
+    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    border-radius: 22px;
+}
+.RezRow_Rez{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+.RezRow_Rez_Input{
+
+}

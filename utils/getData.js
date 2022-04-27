@@ -1,13 +1,9 @@
 const fetch = require('node-fetch')
 const config = require('config')
 const schedule = require('node-schedule')
-const Valutes = require('./model/valutes')
+const Valutes = require('../model/valutes')
 
 const UpdateDB = async(req) =>{
-    console.log(req[0])
-    console.log(req[1])
-    console.log(req[1][0])
-    console.log(req[1][1])
     const candidate = await Valutes.findOne({dateParsing:req[0]})
     if(candidate){
         console.log("Is added")
@@ -21,7 +17,7 @@ const UpdateDB = async(req) =>{
     console.log("Added")
 }
 
-const getDataFromCb = async() =>{
+const getDataFromCb = schedule.scheduleJob('*/5 * * * *',async function (){
     try {
         var Today = new Date()
         Today.setMilliseconds(3 * 60 * 60 * 1000);  // +3 часа
@@ -54,5 +50,5 @@ const getDataFromCb = async() =>{
     } catch (error) {
         console.log("error",error)
     }
-}
+})
 module.exports =  getDataFromCb
