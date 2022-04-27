@@ -48,7 +48,8 @@ const createWeekData = (data,code) =>{
     }
 
     console.log(ValueMas)   
-    return [ValueMas,dateMas]
+
+    return [ValueMas.reverse(),dateMas.reverse()]
 }
 router.post(
     '/getValutes',

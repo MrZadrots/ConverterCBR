@@ -4,7 +4,7 @@ import { useMessage } from '../hooks/message.hook'
 import {AuthContext} from '../context/AuthContext'
 import {Loader} from '../Component/Loader'
 import "../style/Converter.css"
-
+import {LineChart,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Line} from 'recharts'
 import {BulildLine} from '../Component/Line'
 
 
@@ -29,7 +29,9 @@ export const Converter = ({data}) =>{
 
     const changeHandler = async (event) =>{
         setForm({...form, [event.target.name]:event.target.value})
-        /*if(event.target.name === 'roleON' && event.target.value != "RU" && event.target.value != ""){
+        if(event.target.value === "RU")
+            setDateWeek([])
+        if(event.target.name === 'roleON' && event.target.value != "RU" && event.target.value != ""){
             console.log("SDSAd",event.target.value)
             const dataSend = {name: event.target.value}
             const fetchS = await fetch("/api/valutes/getWeekData",{
@@ -45,16 +47,13 @@ export const Converter = ({data}) =>{
             for(let i=0;i<data[0].length;i++){
                 const obj = {}
                 obj.name = data[1][i]
-                obj.value = Number(data[0][i])
+                obj.Ru = Number(data[0][i])
                 objM.push(obj) 
             }
             setDateWeek(objM)
             console.log(dateWeek.length)
-            return(
-                <BulildLine dates={dateWeek} />
-            )
             console.log(objM)
-        }*/
+        }
         console.log({...form})
     }
 
@@ -140,8 +139,8 @@ export const Converter = ({data}) =>{
                     <div className='col-md InputRow_selectClick'>
                         <button className='InputRow_selectClick_Btn' type="button"  onClick = {clickHandler} disabled={loading}>Перевести</button>
                     </div>
-                </div>
-                <div className='row RezRow'>
+            </div>
+            <div className='row RezRow'>
                     <div className='text-center RezRow_Rez'>
                             <input
                                 type="text"
@@ -152,9 +151,23 @@ export const Converter = ({data}) =>{
                                 value={value}
                             />
                     </div>
+            </div>
+            <div className='row GraphRow'>
+                {dateWeek.length !=0 
+                ?<div className='GraphRow_main'>
+                    <span>График выбранного курса</span>
+                    <LineChart width={600} height={300} data = {dateWeek}
+                        margin={{top:5, right:30, left:20,bottom:5}}>
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3 " />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="Ru" stroke="#8884d8" activeDot = {{r:7}} />
+                     </LineChart>
                 </div>
-                
-                {dateWeek.length!=0 ? <></>:<BulildLine dates={dateWeek} />}
-            </div>  
+                : <></>}
+            </div>
+        </div>  
     )
 }
