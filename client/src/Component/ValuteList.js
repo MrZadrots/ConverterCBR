@@ -3,7 +3,7 @@ import {useHttp, } from '../hooks/http.hook'
 import { useMessage } from '../hooks/message.hook'
 import {AuthContext} from '../context/AuthContext'
 import {Loader} from '../Component/Loader'
-
+import '../style/ValuteList.css'
 export const ValuteList = ({valutes}) =>{
     const auth = useContext(AuthContext)
     const message = useMessage()
@@ -34,7 +34,7 @@ export const ValuteList = ({valutes}) =>{
     return(
         <div className="container">
             <div className="row">
-                    <table>
+                    <table className="tableMain">
                         <tr>
                             <th className='d-none d-lg-table-cell'>Букв.код</th>
                             <th className='d-none d-lg-table-cell'>Единиц</th>

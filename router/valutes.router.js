@@ -77,33 +77,35 @@ router.post(
     '/convert',
     [],
     async (req,res) =>{
-        const {convON, roleTO,roleON} = req.body
-        const valutes = await Valutes.findOne({isLast:true})
-        if(!valutes)
-            return res.status(501).json({message:"Ой, попробуйте позже"})
-        const data = convertValutes(valutes.cbr)
-        if(roleTO==="RU"){
-            for(let i=0;i<data.length;i++){
-
-                console.log(data[i].CharCode)
-                if(data[i].CharCode == roleON){
-                    const rezult = convON/data[i].nominal*data[i].value
-                    return res.json(rezult)
-                }   
+        try {
+            const {convON, roleTO,roleON} = req.body
+            const valutes = await Valutes.findOne({isLast:true})
+            if(!valutes)
+                return res.status(501).json({message:"Ой, попробуйте позже"})
+            const data = convertValutes(valutes.cbr)
+            if(roleTO==="RU"){
+                for(let i=0;i<data.length;i++){
+    
+                    console.log(data[i].CharCode)
+                    if(data[i].CharCode == roleON){
+                        const rezult = convON/data[i].nominal*data[i].value
+                        return res.json(rezult)
+                    }   
+                }
             }
-        }
-        if(roleON ==="RU"){
-            for(let i=0;i<data.length;i++){
-
-                console.log(data[i].CharCode)
-                if(data[i].CharCode == roleTO){
-                    const rezult = convON*data[i].nominal/data[i].value
-                    return res.json(rezult)
-                }   
+            if(roleON ==="RU"){
+                for(let i=0;i<data.length;i++){
+    
+                    console.log(data[i].CharCode)
+                    if(data[i].CharCode == roleTO){
+                        const rezult = convON*data[i].nominal/data[i].value
+                        return res.json(rezult)
+                    }   
+                }
             }
+        } catch (error) {
+            res.status(501).json({message:error})
         }
-        //console.log(data)
-        res.json({message:"adsda"})
     }
 )
 

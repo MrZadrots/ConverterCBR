@@ -5,7 +5,6 @@ import {AuthContext} from '../context/AuthContext'
 import {Loader} from '../Component/Loader'
 import "../style/Converter.css"
 import {LineChart,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Line} from 'recharts'
-import {BulildLine} from '../Component/Line'
 
 
 
@@ -14,7 +13,7 @@ export const Converter = ({data}) =>{
     const message = useMessage()
     const {loading,error,request,clearError}=useHttp()
     const [valueWeek, setValueWeek] = useState([])
-    const [dateWeek, setDateWeek] = useState([null])
+    const [dateWeek, setDateWeek] = useState([])
 
     const [form,setForm] = useState({
         convON:'',roleTO:'',roleON:''
@@ -29,10 +28,8 @@ export const Converter = ({data}) =>{
 
     const changeHandler = async (event) =>{
         setForm({...form, [event.target.name]:event.target.value})
-        if(event.target.value === "RU")
-            setDateWeek([])
-        if(event.target.name === 'roleON' && event.target.value != "RU" && event.target.value != ""){
-            console.log("SDSAd",event.target.value)
+        /*if((event.target.name === 'roleON' && event.target.value != "RU" && event.target.value != "")||
+            (event.target.name === 'roleTO' && event.target.value != "RU" && event.target.value != "")){
             const dataSend = {name: event.target.value}
             const fetchS = await fetch("/api/valutes/getWeekData",{
                 mode: "cors",
@@ -51,10 +48,8 @@ export const Converter = ({data}) =>{
                 objM.push(obj) 
             }
             setDateWeek(objM)
-            console.log(dateWeek.length)
-            console.log(objM)
-        }
-        console.log({...form})
+
+        }*/
     }
 
 
@@ -65,7 +60,8 @@ export const Converter = ({data}) =>{
             clearError()  
             return
         }
-
+        if(form.roleTO !='RU'&& form.roleON !="RU")
+            form.roleTO = "RU"
         const fetchS = await fetch("/api/valutes/convert",{
             mode: "cors",
             method:"POST",
@@ -75,8 +71,6 @@ export const Converter = ({data}) =>{
             }
         })
         const data = await fetchS.json()
-        console.log({...form})
-        console.log("DATA",data)    
         setValue(data)
     }
     
@@ -127,14 +121,24 @@ export const Converter = ({data}) =>{
                         />
                     </div>
                     <div className='col-md InputRow_selectTo'>
+                        
+                        {form.roleON==='RU' ?
+                            <div> 
+                                <select  classname="InputRow_selectTo_Selecter  selecter" name="roleTO" onChange={changeHandler}>
+                                <option selected value="" disabled>Выберите из списка</option>
+                                {data.map(el =>{
+                                return(
+                                    <option value={el.CharCode}>{el.name}</option>
+                                )})}
+                                </select>
+                            </div>
+                        : 
+                        <div> 
                         <select  classname="InputRow_selectTo_Selecter  selecter" name="roleTO" onChange={changeHandler}>
                         <option selected value="" disabled>Выберите из списка</option>
-                        {form.roleON==='RU' ? data.map(el =>{
-                            return(
-                                <option value={el.CharCode}>{el.name}</option>
-                            )}): <option value="RU">Российский рубль</option>
-                        }
+                        <option value="RU">Российский рубль</option>
                         </select>
+                        </div>}
                     </div>
                     <div className='col-md InputRow_selectClick'>
                         <button className='InputRow_selectClick_Btn' type="button"  onClick = {clickHandler} disabled={loading}>Перевести</button>
