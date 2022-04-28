@@ -17,7 +17,7 @@ const UpdateDB = async(req) =>{
     console.log("Added")
 }
 
-const getDataFromCb = schedule.scheduleJob('*/5  * * * *',async function (){
+const getDataFromCb = schedule.scheduleJob('*/30 * * * *',async function (){
     try {
         var Today = new Date()
         Today.setMilliseconds(3 * 60 * 60 * 1000);  // +3 часа
@@ -38,9 +38,6 @@ const getDataFromCb = schedule.scheduleJob('*/5  * * * *',async function (){
                 rezP[Valute[ValuteKeys[i]].CharCode] = tmps
                 result.push(rezP)
             }
-            /*for(let i=0;i<Valute.Length;i++)
-                console.log(Valute[i])*/
-            
             await UpdateDB([Date,result])
         }
         else{
