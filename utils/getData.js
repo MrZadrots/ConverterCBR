@@ -4,7 +4,6 @@ const schedule = require('node-schedule')
 const Valutes = require('../model/valutes')
 
 const UpdateDB = async(req) =>{
-    console.log(req[0])
     const candidate = await Valutes.findOne({dateParsing:req[0]})
     if(candidate){
         console.log("Is added")
