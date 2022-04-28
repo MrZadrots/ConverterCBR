@@ -8,8 +8,6 @@ export const ValuteList = ({valutes}) =>{
     const auth = useContext(AuthContext)
     const message = useMessage()
     const {loading,error,request,clearError}=useHttp()
-
-    console.log({valutes})
     useEffect(()=>{
         message(error)
         clearError()  

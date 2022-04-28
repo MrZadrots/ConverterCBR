@@ -24,11 +24,8 @@ export const RegPage = ()=>{
     }
 
     const registerHandler = async () =>{
-        console.log({...form})
-
         try {
             const data = await request('/api/auth/register','POST',{...form})
-            console.log("DATA", data)
             message(data.message)
             if (data.message == "Вы успешно зарегистрировались!") {
                 loginHandler()
@@ -42,7 +39,6 @@ export const RegPage = ()=>{
     const loginHandler = async () =>{
         try {
             const data = await request('/api/auth/login','POST',{...form})
-            console.log(data)
             auth.login(data.token,data.userId,data.userName,data.userRole)
         } catch (error) {
             console.log(error.message)

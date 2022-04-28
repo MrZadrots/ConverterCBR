@@ -1,5 +1,9 @@
 
 /* Demo Background */
+.message{
+  display: none;
+
+}
 .dada{
   
     background-color:#000;

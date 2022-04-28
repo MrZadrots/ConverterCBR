@@ -28,7 +28,7 @@ export const Converter = ({data}) =>{
 
     const changeHandler = async (event) =>{
         setForm({...form, [event.target.name]:event.target.value})
-        /*if((event.target.name === 'roleON' && event.target.value != "RU" && event.target.value != "")||
+        if((event.target.name === 'roleON' && event.target.value != "RU" && event.target.value != "")||
             (event.target.name === 'roleTO' && event.target.value != "RU" && event.target.value != "")){
             const dataSend = {name: event.target.value}
             const fetchS = await fetch("/api/valutes/getWeekData",{
@@ -49,12 +49,11 @@ export const Converter = ({data}) =>{
             }
             setDateWeek(objM)
 
-        }*/
+        }
     }
 
 
     const clickHandler = async ()=>{
-        console.log({...form})
         if(form.convON===''|| form.roleTO==='' || form.roleON===''){
             message("Пустые поля")
             clearError()  

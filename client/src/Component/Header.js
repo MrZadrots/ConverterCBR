@@ -10,8 +10,6 @@ export const Header = () =>{
         auth.logout()
         History.push('/')
     }
-
-    console.log("heaer AUTH", auth.isAuthenticated)
     if(auth.isAuthenticated){
         return(
             <div className="container">

@@ -38,7 +38,6 @@ const createWeekData = (data,code) =>{
         const rez = convertValutes(data[i].cbr)
         for(let i=0;i<rez.length;i++){
             if(rez[i].CharCode === code){
-                console.log("SDad")
                 ValueMas.push(rez[i].value)
                 continue
             }
@@ -47,7 +46,6 @@ const createWeekData = (data,code) =>{
         dateMas.push(convertDate(dateParsing))
     }
 
-    console.log(ValueMas)   
 
     return [ValueMas.reverse(),dateMas.reverse()]
 }
@@ -62,11 +60,9 @@ router.post(
                 return res.status(501).json({message:"Ой, попробуйте позже"})
             const dateParsing = JSON.stringify(valutes.dateParsing)
 
-            //console.log(rez)
             res.json([convertDate(dateParsing),convertValutes(valutes.cbr)])
             
         } catch (error) {
-            console.log(error.message)
             return res.status(501).json({message:"Ой, попробуйте позже"})
         }
 
@@ -85,8 +81,6 @@ router.post(
             const data = convertValutes(valutes.cbr)
             if(roleTO==="RU"){
                 for(let i=0;i<data.length;i++){
-    
-                    console.log(data[i].CharCode)
                     if(data[i].CharCode == roleON){
                         const rezult = convON/data[i].nominal*data[i].value
                         return res.json(rezult)
@@ -95,8 +89,6 @@ router.post(
             }
             if(roleON ==="RU"){
                 for(let i=0;i<data.length;i++){
-    
-                    console.log(data[i].CharCode)
                     if(data[i].CharCode == roleTO){
                         const rezult = convON*data[i].nominal/data[i].value
                         return res.json(rezult)

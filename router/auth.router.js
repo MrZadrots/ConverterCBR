@@ -44,7 +44,6 @@ router.post(
                     expiresIn: '1h'
                 }
             )
-            console.log(user.login)
             res.json({token,userId:user.id,userName:user.login,userRole:user.role})
        } catch (error) {
             console.log(error.message)
